@@ -1,0 +1,52 @@
+# compose.yaml
+name: clasue.AI
+
+services:
+
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: ollama_service
+  #   environment:
+  #     - OLLAMA_KEEP_ALIVE=-1  # Keeps the model in RAM indefinitely
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   # This command starts the server AND pulls the model
+  #   entrypoint: /bin/sh -c "ollama serve & sleep 10 && ollama pull llama3.1:8b && wait"
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_api_clauseai
+    # depends_on: # only if you want to use dockerized ollama
+    #   - ollama
+    restart: always
+    ports:
+      - "8000:8000"  # Expose 8000 for local testing (optional, can be removed if using Nginx proxy)
+    
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LLM_BASE_URL=http://host.docker.internal:11434  # http://ollama:11434 if you want to use dockerized ollama
+      - LLM_MODEL=llama3.1:8b
+    
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_ui_clauseai
+    restart: always
+    ports:
+      - "80:80"      # Maps localhost:80 to container:80
+    depends_on:
+      - backend      # Waits for backend to start
+
+volumes:
+  ollama_data:
+
