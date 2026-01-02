@@ -1,0 +1,16 @@
+{
+  "clause_type": "string",
+  "risk_level": "Low|Medium|High",
+  "risk_reasons": ["string"],
+  "risky_phrases": ["string"],
+  "plain_english": "string",
+  "safer_rewrite": "string",
+  "questions_to_ask": ["string"],
+  "retrieval_evidence": [
+    {
+      "source": "string",
+      "clause_type": "string",
+      "snippet": "string"
+    }
+  ]
+}
