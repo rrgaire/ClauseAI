@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Changed from #020617 to a slightly lighter, richer slate */
+    background-color: #0f172a !important; 
+    color: #cbd5e1; /* Softer white for less contrast strain */
+    @apply antialiased overflow-hidden;
+  }
+
+  /* Remove the aggressive capitalization and italics globally */
+  h1, h2, h3, span, p, button {
+    @apply normal-case not-italic tracking-tight !important;
+  }
+}
+
+/* Softer Glass Effect */
+.glass-card {
+  background: rgba(30, 41, 59, 0.7) !important; /* Lighter slate with more opacity */
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
