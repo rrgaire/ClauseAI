@@ -47,6 +47,6 @@ services:
     depends_on:
       - backend      # Waits for backend to start
 
-volumes:
-  ollama_data:
+# volumes:  # only if you want to use dockerized ollama
+#   ollama_data:
 
